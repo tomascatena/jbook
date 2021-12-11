@@ -6,7 +6,10 @@ import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 const App = () => {
   const ref = useRef<any>();
   const [input, setInput] = useState(
-    'const App = async () => <div>Hi there!</div>'
+    `
+    const a = 1;
+    console.log(a);
+    `
   );
   const [code, setCode] = useState('');
 
@@ -30,7 +33,7 @@ const App = () => {
       entryPoints: ['index.js'],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin()],
+      plugins: [unpkgPathPlugin(input)],
       define: {
         'process.env.NODE_ENV': '"production"',
         global: 'window'

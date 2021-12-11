@@ -1,12 +1,12 @@
 import * as esbuild from 'esbuild-wasm';
 import axios from 'axios';
-import localForage, { getItem } from 'localforage';
+import localForage from 'localforage';
 
 const fileCache = localForage.createInstance({
 	name: 'filecache'
 });
 
-export const unpkgPathPlugin = () => {
+export const unpkgPathPlugin = (inputCode: string) => {
 	return {
 		name: 'unpkg-path-plugin',
 		setup(build: esbuild.PluginBuild) {
@@ -39,10 +39,7 @@ export const unpkgPathPlugin = () => {
 				if (args.path === 'index.js') {
 					return {
 						loader: 'jsx',
-						contents: `
-              import React from 'react';
-              console.log(React);
-            `
+						contents: inputCode
 					};
 				}
 
