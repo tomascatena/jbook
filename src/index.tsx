@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 
 const App = () => {
   const ref = useRef<any>();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(
+    'const App = async () => <div>Hi there!</div>'
+  );
   const [code, setCode] = useState('');
 
   const startService = async () => {
@@ -18,17 +20,24 @@ const App = () => {
     startService();
   }, []);
 
-  const onClick = () => {
+  const onClick = async () => {
     if (!ref.current) {
       return;
     }
 
-    console.log(ref.current);
+    const result = await ref.current.transform(input, {
+      loader: 'jsx',
+      target: 'es2015',
+    });
+
+    setCode(result.code);
   };
 
   return (
     <div>
       <textarea
+        rows={5}
+        cols={50}
         value={input}
         onChange={(e) => setInput(e.target.value)}
       ></textarea>
