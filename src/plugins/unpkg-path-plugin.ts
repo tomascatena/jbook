@@ -1,5 +1,10 @@
 import * as esbuild from 'esbuild-wasm';
 import axios from 'axios';
+import localForage, { getItem } from 'localforage';
+
+const fileCache = localForage.createInstance({
+	name: 'filecache'
+});
 
 export const unpkgPathPlugin = () => {
 	return {
@@ -18,7 +23,7 @@ export const unpkgPathPlugin = () => {
 				if (args.path.includes('./') || args.path.includes('../')) {
 					return {
 						namespace: 'a',
-						path: new URL(args.path, 'https://unpkg.com' + args.resolveDir + '/').href
+						path: new URL(args.path, `https://unpkg.com/${args.resolveDir}/`).href
 					};
 				}
 
@@ -35,19 +40,32 @@ export const unpkgPathPlugin = () => {
 					return {
 						loader: 'jsx',
 						contents: `
-              import message from 'nested-test-pkg';
-              console.log(message);
+              import React from 'react';
+              console.log(React);
             `
 					};
 				}
 
+				// check to see if we have already fetched this file
+				// and if it is in the cache
+				const cachedResult = await fileCache.getItem(args.path);
+
+				// if it is, return it immediately
+				if (cachedResult) {
+					return cachedResult;
+				}
+
 				const { data, request } = await axios.get(args.path);
 
-				return {
+				const result = {
 					loader: 'jsx',
 					contents: data,
 					resolveDir: new URL('./', request.responseURL).pathname
 				};
+
+				await fileCache.setItem(args.path, result);
+
+				return result;
 			});
 		}
 	};
