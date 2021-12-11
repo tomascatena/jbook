@@ -13,12 +13,19 @@ export const unpkgPathPlugin = () => {
 						path: args.path,
 						namespace: 'a'
 					};
-				} else if (args.path === 'tiny-test-pkg') {
+				}
+
+				if (args.path.includes('./') || args.path.includes('../')) {
 					return {
-						path: 'https://unpkg.com/tiny-test-pkg@1.0.0/index.js',
-						namespace: 'a'
+						namespace: 'a',
+						path: new URL(args.path, args.importer + '/').href
 					};
 				}
+
+				return {
+					namespace: 'a',
+					path: `https://unpkg.com/${args.path}`
+				};
 			});
 
 			build.onLoad({ filter: /.*/ }, async (args: any) => {
@@ -28,7 +35,7 @@ export const unpkgPathPlugin = () => {
 					return {
 						loader: 'jsx',
 						contents: `
-              import message from 'tiny-test-pkg';
+              import message from 'medium-test-pkg';
               console.log(message);
             `
 					};
