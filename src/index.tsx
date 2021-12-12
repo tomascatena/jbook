@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
+import CodeEditor from './components/CodeEditor';
 
 const App = () => {
 	const ref = useRef<any>();
@@ -77,6 +78,8 @@ ReactDOM.render(
 
 	return (
 		<div>
+			<CodeEditor />
+
 			<textarea rows={10} cols={70} value={input} onChange={(e) => setInput(e.target.value)} />
 
 			<div>
