@@ -45,9 +45,9 @@ const App = () => {
     });
 
     setCode(result.outputFiles[0].text);
-
-    eval(result.outputFiles[0].text)
   };
+
+  const html = `<script>${code}</script>`;
 
   return (
     <div>
@@ -65,16 +65,12 @@ const App = () => {
       <pre>{code}</pre>
 
       <iframe 
-        sandbox='' 
+        sandbox='allow-scripts' 
         title='iframe' 
         srcDoc={html}
       ></iframe>
     </div>
   );
 };
-
-const html = `
-<h1>Local HTML doc</h1>
-`
 
 ReactDOM.render(<App />, document.querySelector('#root'));
