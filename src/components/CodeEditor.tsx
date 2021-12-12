@@ -4,6 +4,9 @@ import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
+import codeShift from 'jscodeshift';
+import Highlighter from 'monaco-jsx-highlighter';
+import './syntax.css';
 
 const FormatButton = styled(Button)(({ theme }) => ({
   position: 'absolute',
@@ -32,6 +35,20 @@ const CodeEditor: FC<CodeEditorProps> = ({ initialValue, onChange }) => {
     });
 
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
+
+    const highlighter = new Highlighter(
+      // @ts-ignore
+      window.monaco,
+      codeShift,
+      monacoEditor
+    );
+
+    highlighter.highLightOnDidChangeModelContent(
+      () => {},
+      () => {},
+      undefined,
+      () => {}
+    );
   };
 
   const onFormatClick = () => {
