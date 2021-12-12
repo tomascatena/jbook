@@ -18,7 +18,6 @@ ReactDOM.render(
   document.querySelector('#root')
 );`
 	);
-	const [ code, setCode ] = useState('');
 
 	const startService = async () => {
 		ref.current = await esbuild.startService({
@@ -35,6 +34,8 @@ ReactDOM.render(
 		if (!ref.current) {
 			return;
 		}
+
+		iframe.current.srcdoc = html;
 
 		const result = await ref.current.build({
 			entryPoints: [ 'index.js' ],
@@ -82,9 +83,7 @@ ReactDOM.render(
 				<button onClick={onClick}>Submit</button>
 			</div>
 
-			<pre>{code}</pre>
-
-			<iframe ref={iframe} sandbox='allow-scripts' title='iframe' srcDoc={html} />
+			<iframe ref={iframe} sandbox='allow-scripts' title='preview' srcDoc={html} />
 		</div>
 	);
 };
