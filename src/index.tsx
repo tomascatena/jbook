@@ -5,46 +5,53 @@ import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 
 const App = () => {
-  const ref = useRef<any>();
-  const iframe = useRef<any>();
-  const [input, setInput] = useState('');
-  const [code, setCode] = useState('');
+	const ref = useRef<any>();
+	const iframe = useRef<any>();
+	const [ input, setInput ] = useState(
+		`import React from 'react';
+import ReactDOM from 'react-dom';
 
-  const startService = async () => {
-    ref.current = await esbuild.startService({
-      worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
-    });
-  };
+const App = () => <h1>Hi from React!</h1>;
 
-  useEffect(() => {
-    startService();
-  }, []);
+ReactDOM.render(
+  <App/>,
+  document.querySelector('#root')
+);`
+	);
+	const [ code, setCode ] = useState('');
 
-  const onClick = async () => {
-    if (!ref.current) {
-      return;
-    }
+	const startService = async () => {
+		ref.current = await esbuild.startService({
+			worker: true,
+			wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm'
+		});
+	};
 
-    const result = await ref.current.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      plugins: [
-        unpkgPathPlugin(),
-        fetchPlugin(input),
-      ],
-      define: {
-        'process.env.NODE_ENV': '"production"',
-        global: 'window'
-      }
-    });
+	useEffect(() => {
+		startService();
+	}, []);
 
-    // setCode(result.outputFiles[0].text);
-    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*')
-  };
+	const onClick = async () => {
+		if (!ref.current) {
+			return;
+		}
 
-  const html = `
+		const result = await ref.current.build({
+			entryPoints: [ 'index.js' ],
+			bundle: true,
+			write: false,
+			plugins: [ unpkgPathPlugin(), fetchPlugin(input) ],
+			define: {
+				'process.env.NODE_ENV': '"production"',
+				global: 'window'
+			}
+		});
+
+		// setCode(result.outputFiles[0].text);
+		iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
+	};
+
+	const html = `
   <html>
     <head>
     </head>
@@ -54,36 +61,32 @@ const App = () => {
 
       <script>
         window.addEventListener("message", (event) => {
-          eval(event.data);
+          try {
+            eval(event.data);
+          } catch (err) {
+            const root = document.querySelector('#root');
+            root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
+            console.error(err);
+          }
         }, false);
       </script>
     </body>
   </html>
   `;
 
-  return (
-    <div>
-      <textarea
-        rows={5}
-        cols={50}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      ></textarea>
+	return (
+		<div>
+			<textarea rows={10} cols={70} value={input} onChange={(e) => setInput(e.target.value)} />
 
-      <div>
-        <button onClick={onClick}>Submit</button>
-      </div>
+			<div>
+				<button onClick={onClick}>Submit</button>
+			</div>
 
-      <pre>{code}</pre>
+			<pre>{code}</pre>
 
-      <iframe 
-        ref={iframe}
-        sandbox='allow-scripts' 
-        title='iframe' 
-        srcDoc={html}
-      ></iframe>
-    </div>
-  );
+			<iframe ref={iframe} sandbox='allow-scripts' title='iframe' srcDoc={html} />
+		</div>
+	);
 };
 
 ReactDOM.render(<App />, document.querySelector('#root'));
