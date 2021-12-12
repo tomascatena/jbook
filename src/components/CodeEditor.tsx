@@ -3,6 +3,18 @@ import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import Button from '@mui/material/Button';
+import { styled } from '@mui/system';
+
+const FormatButton = styled(Button)(({ theme }) => ({
+  position: 'absolute',
+  zIndex: 1,
+  right: '.5rem',
+  top: '.5rem',
+}));
+
+const CodeEditorContainer = styled('div')(({ theme }) => ({
+  position: 'relative',
+}));
 
 interface CodeEditorProps {
   initialValue: string;
@@ -25,22 +37,24 @@ const CodeEditor: FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const onFormatClick = () => {
     const unformatted = editorRef.current.getModel().getValue();
 
-    const formatted = prettier.format(unformatted, {
-      parser: 'babel',
-      plugins: [parser],
-      useTabs: false,
-      semi: true,
-      singleQuote: true,
-    });
+    const formatted = prettier
+      .format(unformatted, {
+        parser: 'babel',
+        plugins: [parser],
+        useTabs: false,
+        semi: true,
+        singleQuote: true,
+      })
+      .replace(/\n$/, '');
 
     editorRef.current.setValue(formatted);
   };
 
   return (
-    <>
-      <Button variant='outlined' onClick={onFormatClick}>
+    <CodeEditorContainer>
+      <FormatButton variant='outlined' onClick={onFormatClick}>
         Format
-      </Button>
+      </FormatButton>
 
       <MonacoEditor
         editorDidMount={onEditorDidMount}
@@ -59,7 +73,7 @@ const CodeEditor: FC<CodeEditorProps> = ({ initialValue, onChange }) => {
           automaticLayout: true,
         }}
       />
-    </>
+    </CodeEditorContainer>
   );
 };
 
