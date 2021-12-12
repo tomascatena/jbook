@@ -2,6 +2,7 @@ import React, { FC, useRef } from 'react';
 import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
+import Button from '@mui/material/Button';
 
 interface CodeEditorProps {
   initialValue: string;
@@ -37,7 +38,9 @@ const CodeEditor: FC<CodeEditorProps> = ({ initialValue, onChange }) => {
 
   return (
     <>
-      <button onClick={onFormatClick}>Format</button>
+      <Button variant='outlined' onClick={onFormatClick}>
+        Format
+      </Button>
 
       <MonacoEditor
         editorDidMount={onEditorDidMount}
