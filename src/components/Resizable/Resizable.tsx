@@ -6,8 +6,11 @@ interface Props {
 }
 
 const Resizable: FC<Props> = ({ direction, children }) => {
+  const initialPreviewWidth = window.innerWidth * 0.65;
+
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(initialPreviewWidth);
 
   let resizableProps: ResizableBoxProps;
 
@@ -21,6 +24,9 @@ const Resizable: FC<Props> = ({ direction, children }) => {
       timer = setTimeout(() => {
         setInnerHeight(window.innerHeight);
         setInnerWidth(window.innerWidth);
+        if (initialPreviewWidth < width) {
+          setWidth(initialPreviewWidth);
+        }
       }, 100);
     };
 
@@ -35,10 +41,13 @@ const Resizable: FC<Props> = ({ direction, children }) => {
     resizableProps = {
       className: 'resize-horizontal',
       height: Infinity,
-      width: innerWidth * 0.5,
+      width,
       maxConstraints: [innerWidth * 0.75, Infinity],
       minConstraints: [innerWidth * 0.2, Infinity],
       resizeHandles: ['e'],
+      onResizeStop(event, data) {
+        setWidth(data.size.width);
+      },
     };
   } else {
     resizableProps = {
