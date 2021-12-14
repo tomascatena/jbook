@@ -13,12 +13,18 @@ const FormatButton = styled(Button)(({ theme }) => ({
   zIndex: 1,
   right: '.5rem',
   top: '.5rem',
+  opacity: 0,
+  transition: 'opacity 0.3s',
 }));
 
 const CodeEditorContainer = styled('div')(({ theme }) => ({
   position: 'relative',
-  width: '100%',
+  width: 'calc(100% - 10px)',
   height: '100%',
+
+  '&:hover > .MuiButton-root': {
+    opacity: 1,
+  },
 }));
 
 interface CodeEditorProps {

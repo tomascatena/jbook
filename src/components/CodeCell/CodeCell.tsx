@@ -25,10 +25,12 @@ const CodeCell: FC = () => {
   return (
     <Resizable direction='vertical'>
       <CodeCellContainer>
-        <CodeEditor
-          initialValue='const a = 1;'
-          onChange={(value) => setInput(value)}
-        />
+        <Resizable direction='horizontal'>
+          <CodeEditor
+            initialValue='const a = 1;'
+            onChange={(value) => setInput(value)}
+          />
+        </Resizable>
 
         <Preview code={code} />
       </CodeCellContainer>

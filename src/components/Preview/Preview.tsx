@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 const IframeContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   height: '100%',
+  flex: 1,
 
   '.react-draggable-transparent-selection &:after': {
     content: '""',
@@ -12,18 +13,24 @@ const IframeContainer = styled('div')(({ theme }) => ({
     right: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: 'red',
+    backgroundColor: 'transparent',
   },
 
   iframe: {
     height: '100%',
     backgroundColor: '#fff',
+    width: '100%',
   },
 }));
 
 const html = `
 <html>
   <head>
+    <style>
+      html {
+        background-color: '#fff'
+      }
+    </style>
   </head>
   
   <body>
