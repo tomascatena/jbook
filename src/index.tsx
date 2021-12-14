@@ -6,7 +6,7 @@ import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import CodeCell from './components/CodeCell';
+import CodeCell from './components/CodeCell/CodeCell';
 
 const MainLayout = styled(Box)(({ theme }) => ({
   minHeight: '100vh',

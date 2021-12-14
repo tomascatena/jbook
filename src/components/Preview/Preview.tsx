@@ -40,6 +40,7 @@ const Preview: FC<Props> = ({ code }) => {
 
   return (
     <iframe
+      style={{ backgroundColor: '#fff' }}
       title='preview'
       sandbox='allow-scripts'
       srcDoc={html}

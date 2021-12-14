@@ -17,6 +17,8 @@ const FormatButton = styled(Button)(({ theme }) => ({
 
 const CodeEditorContainer = styled('div')(({ theme }) => ({
   position: 'relative',
+  width: '100%',
+  height: '100%',
 }));
 
 interface CodeEditorProps {
@@ -77,7 +79,6 @@ const CodeEditor: FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         editorDidMount={onEditorDidMount}
         value={initialValue}
         language='javascript'
-        height='500px'
         theme='dark'
         options={{
           wordWrap: 'on',
