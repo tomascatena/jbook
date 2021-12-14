@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import darkTheme from './themes/defaultDarkTheme';
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import CodeCell from './components/CodeCell/CodeCell';
 
@@ -20,9 +19,7 @@ const App = () => {
       <CssBaseline />
 
       <MainLayout>
-        <Container sx={{ marginBlock: 2 }}>
-          <CodeCell />
-        </Container>
+        <CodeCell />
       </MainLayout>
     </ThemeProvider>
   );
