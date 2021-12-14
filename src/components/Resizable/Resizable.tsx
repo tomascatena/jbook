@@ -35,7 +35,8 @@ const Resizable: FC<Props> = ({ direction, children }) => {
     return () => {
       window.removeEventListener('resize', listener);
     };
-  }, []);
+    // eslint-disable-next-line
+  }, [width]);
 
   if (direction === 'horizontal') {
     resizableProps = {
