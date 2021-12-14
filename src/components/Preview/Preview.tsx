@@ -60,11 +60,13 @@ const Preview: FC<Props> = ({ code }) => {
 
   useEffect(() => {
     iframe.current.srcdoc = html;
-  }, [code]);
 
-  if (iframe.current) {
-    iframe.current.contentWindow.postMessage(code, '*');
-  }
+    if (iframe.current) {
+      setTimeout(() => {
+        iframe.current.contentWindow.postMessage(code, '*');
+      }, 50);
+    }
+  }, [code]);
 
   return (
     <IframeContainer>
