@@ -37,13 +37,22 @@ const html = `
     <div id="root"></div>
 
     <script>
+      const handleError = (err) => {
+        const root = document.querySelector('#root');
+        root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
+        console.error(err);
+      };
+
+      window.addEventListener('error', (event) => {
+        event.preventDefault(); // for the browser not to print out the error in the console
+        handleError(event.error);
+      })
+
       window.addEventListener("message", (event) => {
         try {
           eval(event.data);
         } catch (err) {
-          const root = document.querySelector('#root');
-          root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
-          console.error(err);
+          handleError(err)
         }
       }, false);
     </script>
