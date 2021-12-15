@@ -23,6 +23,17 @@ const IframeContainer = styled('div')(({ theme }) => ({
   },
 }));
 
+const PreviewError = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  color: 'red',
+  backgroundColor: '#fff',
+  height: '100%',
+  width: '100%',
+  padding: theme.spacing(1),
+}));
+
 const html = `
 <html>
   <head>
@@ -40,6 +51,7 @@ const html = `
       const handleError = (err) => {
         const root = document.querySelector('#root');
         root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
+
         console.error(err);
       };
 
@@ -62,9 +74,10 @@ const html = `
 
 interface Props {
   code: string;
+  bundlingStatus: string | null;
 }
 
-const Preview: FC<Props> = ({ code }) => {
+const Preview: FC<Props> = ({ code, bundlingStatus }) => {
   const iframe = useRef<any>();
 
   useEffect(() => {
@@ -85,6 +98,8 @@ const Preview: FC<Props> = ({ code }) => {
         srcDoc={html}
         ref={iframe}
       />
+
+      {bundlingStatus && <PreviewError>{bundlingStatus}</PreviewError>}
     </IframeContainer>
   );
 };

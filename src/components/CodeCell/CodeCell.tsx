@@ -15,12 +15,14 @@ const CodeCellContainer = styled(Box)(({ theme }) => ({
 const CodeCell: FC = () => {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
+  const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(async () => {
       const output = await bundler(input);
 
-      setCode(output);
+      setCode(output.code);
+      setErr(output.err);
     }, 800);
 
     return () => {
@@ -40,7 +42,7 @@ const CodeCell: FC = () => {
           />
         </Resizable>
 
-        <Preview code={code} />
+        <Preview code={code} bundlingStatus={err} />
       </CodeCellContainer>
     </Resizable>
   );
