@@ -6,6 +6,7 @@ import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import CodeCell from './components/CodeCell/CodeCell';
+import TextEditor from './components/TextEditor/TextEditor';
 
 const MainLayout = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
@@ -20,6 +21,8 @@ const App = () => {
 
       <MainLayout>
         <CodeCell />
+
+        <TextEditor />
       </MainLayout>
     </ThemeProvider>
   );
