@@ -1,5 +1,25 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import MDEditor from '@uiw/react-md-editor';
+import { styled } from '@mui/system';
+
+import './TextEditor.css';
+
+const TextEditorContainer = styled('div')(({ theme }) => ({
+  '.w-md-editor-bar svg': {
+    display: 'none',
+  },
+
+  '.w-md-editor-bar': {
+    position: 'relative',
+    width: '100%',
+    height: '11px',
+    cursor: 'row-resize',
+    backgroundColor: '#37414b',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: '50%',
+    backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=")`,
+  },
+}));
 
 interface Props {}
 
@@ -29,16 +49,16 @@ const TextEditor: FC<Props> = () => {
 
   if (editing) {
     return (
-      <div ref={MDEditorRef}>
+      <TextEditorContainer ref={MDEditorRef}>
         <MDEditor />
-      </div>
+      </TextEditorContainer>
     );
   }
 
   return (
-    <div onClick={() => setEditing(true)}>
+    <TextEditorContainer onClick={() => setEditing(true)}>
       <MDEditor.Markdown source={'# Header'} />
-    </div>
+    </TextEditorContainer>
   );
 };
 
