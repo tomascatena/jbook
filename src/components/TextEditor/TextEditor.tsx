@@ -1,14 +1,23 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 
 interface Props {}
 
 const TextEditor: FC<Props> = () => {
   const [editing, setEditing] = useState(false);
+  const MDEditorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const listener = () => {
-      setEditing(false);
+    const listener = (event: MouseEvent) => {
+      if (
+        MDEditorRef.current &&
+        event.target &&
+        MDEditorRef.current.contains(event.target as Node)
+      ) {
+        setEditing(true);
+      } else {
+        setEditing(false);
+      }
     };
 
     document.addEventListener('click', listener, { capture: true });
@@ -20,7 +29,7 @@ const TextEditor: FC<Props> = () => {
 
   if (editing) {
     return (
-      <div>
+      <div ref={MDEditorRef}>
         <MDEditor />
       </div>
     );
