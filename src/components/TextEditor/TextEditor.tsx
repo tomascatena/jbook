@@ -1,30 +1,20 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { styled } from '@mui/system';
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
 
 import './TextEditor.css';
 
 const TextEditorContainer = styled('div')(({ theme }) => ({
-  '.w-md-editor-bar svg': {
-    display: 'none',
-  },
-
-  '.w-md-editor-bar': {
-    position: 'relative',
-    width: '100%',
-    height: '11px',
-    cursor: 'row-resize',
-    backgroundColor: '#37414b',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: '50%',
-    backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=")`,
-  },
+  marginTop: theme.spacing(1),
 }));
 
 interface Props {}
 
 const TextEditor: FC<Props> = () => {
   const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState('# Header');
   const MDEditorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -49,15 +39,22 @@ const TextEditor: FC<Props> = () => {
 
   if (editing) {
     return (
-      <TextEditorContainer ref={MDEditorRef}>
-        <MDEditor />
+      <TextEditorContainer className='text-editor' ref={MDEditorRef}>
+        <MDEditor onChange={(v) => setValue(v || '')} />
       </TextEditorContainer>
     );
   }
 
   return (
-    <TextEditorContainer onClick={() => setEditing(true)}>
-      <MDEditor.Markdown source={'# Header'} />
+    <TextEditorContainer
+      className='text-editor'
+      onClick={() => setEditing(true)}
+    >
+      <Card variant='outlined'>
+        <CardContent>
+          <MDEditor.Markdown source={value} />
+        </CardContent>
+      </Card>
     </TextEditorContainer>
   );
 };
