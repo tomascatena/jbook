@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import CodeCell from './components/CodeCell/CodeCell';
 import TextEditor from './components/TextEditor/TextEditor';
+import { store } from './store/store';
+import { Provider } from 'react-redux';
 
 const MainLayout = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
@@ -19,11 +21,13 @@ const App = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
 
-      <MainLayout>
-        <CodeCell />
+      <Provider store={store}>
+        <MainLayout>
+          <CodeCell />
 
-        <TextEditor />
-      </MainLayout>
+          <TextEditor />
+        </MainLayout>
+      </Provider>
     </ThemeProvider>
   );
 };
