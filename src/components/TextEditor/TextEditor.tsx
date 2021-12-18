@@ -59,7 +59,7 @@ const TextEditor: FC<Props> = ({ cell }) => {
     >
       <Card variant="outlined">
         <CardContent>
-          <MDEditor.Markdown source={cell.content} />
+          <MDEditor.Markdown source={cell.content || '## Click to edit'} />
         </CardContent>
       </Card>
     </TextEditorContainer>
