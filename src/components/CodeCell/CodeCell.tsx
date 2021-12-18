@@ -5,6 +5,8 @@ import Preview from '../Preview/Preview';
 import bundler from '../../bundler';
 import { styled } from '@mui/system';
 import Resizable from '../Resizable/Resizable';
+import { Cell } from '../../store/cell';
+import { useActions, useTypedSelector } from '../../hooks';
 
 const CodeCellContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -12,14 +14,20 @@ const CodeCellContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'row',
 }));
 
-const CodeCell: FC = () => {
-  const [input, setInput] = useState('');
+interface Props {
+  cell: Cell;
+}
+
+const CodeCell: FC<Props> = ({ cell }) => {
+  const { updateCell } = useActions();
+  const { data } = useTypedSelector((state) => state.cells);
+
   const [code, setCode] = useState('');
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundler(input);
+      const output = await bundler(cell.content);
 
       setCode(output.code);
       setErr(output.err);
@@ -30,15 +38,15 @@ const CodeCell: FC = () => {
         clearTimeout(timer);
       }
     };
-  }, [input]);
+  }, [cell.content]);
 
   return (
-    <Resizable direction='vertical'>
+    <Resizable direction="vertical">
       <CodeCellContainer>
-        <Resizable direction='horizontal'>
+        <Resizable direction="horizontal">
           <CodeEditor
-            initialValue='const a = 1;'
-            onChange={(value) => setInput(value)}
+            initialValue={cell.content}
+            onChange={(value) => updateCell({ id: cell.id, content: value })}
           />
         </Resizable>
 

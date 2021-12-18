@@ -3,18 +3,22 @@ import MDEditor from '@uiw/react-md-editor';
 import { styled } from '@mui/system';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
-
+import { useActions } from '../../hooks';
 import './TextEditor.css';
+import { Cell } from '../../store/cell';
 
 const TextEditorContainer = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(1),
 }));
 
-interface Props {}
+interface Props {
+  cell: Cell;
+}
 
-const TextEditor: FC<Props> = () => {
+const TextEditor: FC<Props> = ({ cell }) => {
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState('# Header');
+  const { updateCell } = useActions();
+
   const MDEditorRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -39,20 +43,23 @@ const TextEditor: FC<Props> = () => {
 
   if (editing) {
     return (
-      <TextEditorContainer className='text-editor' ref={MDEditorRef}>
-        <MDEditor onChange={(v) => setValue(v || '')} />
+      <TextEditorContainer className="text-editor" ref={MDEditorRef}>
+        <MDEditor
+          value={cell.content}
+          onChange={(v) => updateCell({ id: cell.id, content: v || '' })}
+        />
       </TextEditorContainer>
     );
   }
 
   return (
     <TextEditorContainer
-      className='text-editor'
+      className="text-editor"
       onClick={() => setEditing(true)}
     >
-      <Card variant='outlined'>
+      <Card variant="outlined">
         <CardContent>
-          <MDEditor.Markdown source={value} />
+          <MDEditor.Markdown source={cell.content} />
         </CardContent>
       </Card>
     </TextEditorContainer>
