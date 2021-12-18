@@ -69,7 +69,7 @@ export const cellsSlice = createSlice({
     },
     insertCellAfter: (
       state,
-      action: PayloadAction<{ id: string; type: CellTypes }>
+      action: PayloadAction<{ id: string | null; type: CellTypes }>
     ) => {
       const { type } = action.payload;
 
