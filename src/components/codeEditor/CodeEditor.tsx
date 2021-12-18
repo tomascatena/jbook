@@ -15,6 +15,7 @@ const FormatButton = styled(Button)(({ theme }) => ({
   top: '.5rem',
   opacity: 0,
   transition: 'opacity 0.3s',
+  marginRight: theme.spacing(2),
 }));
 
 const CodeEditorContainer = styled('div')(({ theme }) => ({
@@ -77,15 +78,15 @@ const CodeEditor: FC<CodeEditorProps> = ({ initialValue, onChange }) => {
 
   return (
     <CodeEditorContainer>
-      <FormatButton variant='outlined' onClick={onFormatClick}>
+      <FormatButton variant="outlined" onClick={onFormatClick}>
         Format
       </FormatButton>
 
       <MonacoEditor
         editorDidMount={onEditorDidMount}
         value={initialValue}
-        language='javascript'
-        theme='dark'
+        language="javascript"
+        theme="dark"
         options={{
           wordWrap: 'on',
           minimap: { enabled: false },

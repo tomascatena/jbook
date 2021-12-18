@@ -6,7 +6,7 @@ import bundler from '../../bundler';
 import { styled } from '@mui/system';
 import Resizable from '../Resizable/Resizable';
 import { Cell } from '../../store/cell';
-import { useActions, useTypedSelector } from '../../hooks';
+import { useActions } from '../../hooks';
 
 const CodeCellContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -20,7 +20,6 @@ interface Props {
 
 const CodeCell: FC<Props> = ({ cell }) => {
   const { updateCell } = useActions();
-  const { data } = useTypedSelector((state) => state.cells);
 
   const [code, setCode] = useState('');
   const [err, setErr] = useState<string | null>(null);
@@ -41,7 +40,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
   }, [cell.content]);
 
   return (
-    <Box sx={{ marginBottom: '11px' }}>
+    <Box sx={{ marginBottom: '21px' }}>
       <Resizable direction="vertical">
         <CodeCellContainer>
           <Resizable direction="horizontal">
