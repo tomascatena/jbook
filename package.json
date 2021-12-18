@@ -8,6 +8,7 @@
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@monaco-editor/react": "3.7.5",
+    "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.2.3",
     "@mui/system": "^5.2.3",
     "@reduxjs/toolkit": "^1.7.0",

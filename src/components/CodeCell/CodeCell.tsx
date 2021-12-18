@@ -41,18 +41,20 @@ const CodeCell: FC<Props> = ({ cell }) => {
   }, [cell.content]);
 
   return (
-    <Resizable direction="vertical">
-      <CodeCellContainer>
-        <Resizable direction="horizontal">
-          <CodeEditor
-            initialValue={cell.content}
-            onChange={(value) => updateCell({ id: cell.id, content: value })}
-          />
-        </Resizable>
+    <Box sx={{ marginBottom: '11px' }}>
+      <Resizable direction="vertical">
+        <CodeCellContainer>
+          <Resizable direction="horizontal">
+            <CodeEditor
+              initialValue={cell.content}
+              onChange={(value) => updateCell({ id: cell.id, content: value })}
+            />
+          </Resizable>
 
-        <Preview code={code} bundlingStatus={err} />
-      </CodeCellContainer>
-    </Resizable>
+          <Preview code={code} bundlingStatus={err} />
+        </CodeCellContainer>
+      </Resizable>
+    </Box>
   );
 };
 
