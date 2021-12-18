@@ -5,10 +5,9 @@ import darkTheme from './themes/defaultDarkTheme';
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import CodeCell from './components/CodeCell/CodeCell';
-import TextEditor from './components/TextEditor/TextEditor';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
+import CellList from './components/CellList/CellList';
 
 const MainLayout = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
@@ -23,9 +22,7 @@ const App = () => {
 
       <Provider store={store}>
         <MainLayout>
-          <CodeCell />
-
-          <TextEditor />
+          <CellList />
         </MainLayout>
       </Provider>
     </ThemeProvider>
