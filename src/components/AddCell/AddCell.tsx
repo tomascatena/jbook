@@ -21,12 +21,15 @@ const AddCell: FC<Props> = ({
 
   useEffect(() => {
     if (previousCellId === order[order.length - 1]) {
+      console.log(previousCellId, order);
+
       window.scrollTo({
         top: window.document.body.scrollHeight,
         behavior: 'smooth',
       });
     }
-  }, [order, previousCellId]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <AddCellContainer forceVisible={forceVisible} opacity={opacity}>

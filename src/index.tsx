@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import CellList from './components/CellList/CellList';
 
 const MainLayout = styled(Box)(({ theme }) => ({
-  minHeight: '100vh',
   color: theme.palette.primary.main,
   backgroundColor: theme.palette.background.paper,
 }));
