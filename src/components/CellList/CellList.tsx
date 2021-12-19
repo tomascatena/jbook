@@ -13,22 +13,24 @@ const CellList: FC = (props: Props) => {
   const renderedCells = cellsList.map((cell) => {
     return (
       <Fragment key={cell.id}>
-        <AddCell nextCellId={cell.id} />
-
         <CellListItem cell={cell} />
+
+        <AddCell previousCellId={cell.id} />
       </Fragment>
     );
   });
 
+  renderedCells.push();
+
   return (
     <>
-      {renderedCells}
-
       <AddCell
         forceVisible
-        opacity={cellsList.length === 0 ? 1 : 0.5}
-        nextCellId={null}
+        opacity={cellsList.length === 0 ? 1 : 0}
+        previousCellId={null}
       />
+
+      {renderedCells}
     </>
   );
 };

@@ -16,6 +16,11 @@ export const AddCellContainer = styled('div', {
       opacity: 1,
     },
 
+    '&:active': {
+      opacity: 1,
+      transition: 'opacity 0s',
+    },
+
     '& > .MuiButton-root': {
       zIndex: 2,
       backgroundColor: theme.palette.background.paper,

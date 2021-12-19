@@ -1,21 +1,32 @@
-import React, { FC } from 'react';
-import { useActions } from '../../hooks';
+import React, { FC, useEffect } from 'react';
+import { useActions, useTypedSelector } from '../../hooks';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { AddCellContainer, Divider } from './AddCell.styled';
 
 interface Props {
-  nextCellId: string | null;
+  previousCellId: string | null;
   forceVisible?: boolean;
   opacity?: number;
 }
 
 const AddCell: FC<Props> = ({
-  nextCellId,
+  previousCellId,
   forceVisible = false,
   opacity = 1,
 }) => {
-  const { insertCellBefore } = useActions();
+  const { insertCell } = useActions();
+
+  const { order } = useTypedSelector((state) => state.cells);
+
+  useEffect(() => {
+    if (previousCellId === order[order.length - 1]) {
+      window.scrollTo({
+        top: window.document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [order, previousCellId]);
 
   return (
     <AddCellContainer forceVisible={forceVisible} opacity={opacity}>
@@ -23,7 +34,7 @@ const AddCell: FC<Props> = ({
         startIcon={<AddIcon />}
         size="small"
         variant="outlined"
-        onClick={() => insertCellBefore({ id: nextCellId, type: 'code' })}
+        onClick={() => insertCell({ id: previousCellId, type: 'code' })}
       >
         Code
       </Button>
@@ -32,7 +43,7 @@ const AddCell: FC<Props> = ({
         startIcon={<AddIcon />}
         size="small"
         variant="outlined"
-        onClick={() => insertCellBefore({ id: nextCellId, type: 'text' })}
+        onClick={() => insertCell({ id: previousCellId, type: 'text' })}
       >
         MarkDown
       </Button>

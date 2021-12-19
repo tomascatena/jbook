@@ -45,7 +45,7 @@ export const cellsSlice = createSlice({
 
       state.order = state.order.filter((id) => id !== action.payload);
     },
-    insertCellBefore: (
+    insertCell: (
       state,
       action: PayloadAction<{ id: string | null; type: CellTypes }>
     ) => {
@@ -62,29 +62,7 @@ export const cellsSlice = createSlice({
       const index = state.order.findIndex((id) => id === action.payload.id);
 
       if (index < 0) {
-        state.order.push(cell.id);
-      } else {
-        state.order.splice(index, 0, cell.id);
-      }
-    },
-    insertCellAfter: (
-      state,
-      action: PayloadAction<{ id: string | null; type: CellTypes }>
-    ) => {
-      const { type } = action.payload;
-
-      const cell: Cell = {
-        id: uuidv4(),
-        type,
-        content: '',
-      };
-
-      state.data[cell.id] = cell;
-
-      const index = state.order.findIndex((id) => id === action.payload.id);
-
-      if (index < 0 || index > state.order.length - 1) {
-        state.order.push(cell.id);
+        state.order.unshift(cell.id);
       } else {
         state.order.splice(index + 1, 0, cell.id);
       }
