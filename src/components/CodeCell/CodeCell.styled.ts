@@ -6,3 +6,12 @@ export const CodeCellContainer = styled(Box)({
   height: '100%',
   flexDirection: 'row',
 });
+
+export const BundlingProgress = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  flexDirection: 'column',
+  gap: '1rem',
+});

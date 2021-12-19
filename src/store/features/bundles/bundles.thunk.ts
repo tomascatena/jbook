@@ -4,33 +4,53 @@ import { RootState } from '../../store';
 import { bundlesActions, Bundle } from './bundlesSlice';
 
 export const createBundle = createAsyncThunk<
-  Bundle,
+  Bundle | undefined,
   { cellId: string; rawCode: string },
-  { state: RootState; rejectValue: Bundle }
+  { state: RootState }
 >(
   'bundles/createBundle',
-  async ({ cellId, rawCode }, { dispatch, rejectWithValue }) => {
+  async (
+    { cellId, rawCode },
+    { dispatch, getState }
+  ): Promise<Bundle | undefined> => {
     dispatch(bundlesActions.setCurrentCellId(cellId));
+
+    const { cellBundles } = getState().bundles;
+
+    if (cellBundles[cellId].isBundling) {
+      return;
+    }
+
+    dispatch(bundlesActions.startBundling(cellId));
+
+    let bundle: Bundle = {
+      code: '',
+      err: '',
+    };
 
     try {
       const result = await bundler(rawCode);
 
-      return {
+      bundle = {
         code: result.outputFiles[0].text,
         err: null,
       };
     } catch (error) {
       if (error instanceof Error) {
-        return rejectWithValue({
+        bundle = {
           code: '',
           err: error.message,
-        });
+        };
       }
+    } finally {
+      dispatch(
+        bundlesActions.completeBundling({
+          cellId,
+          bundle,
+        })
+      );
 
-      return rejectWithValue({
-        code: '',
-        err: '',
-      });
+      return bundle;
     }
   }
 );

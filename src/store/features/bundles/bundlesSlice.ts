@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createBundle } from './bundles.thunk';
 
 export interface Bundle {
   code: string;
@@ -10,9 +9,9 @@ export interface BundlesState {
   currentCellId: string | null;
   cellBundles: {
     [key: string]: {
-      isBundling: boolean;
       code: string;
       err: string | null;
+      isBundling: boolean;
     };
   };
 }
@@ -28,62 +27,37 @@ export const bundlesSlice = createSlice({
   reducers: {
     setCurrentCellId(state, action: PayloadAction<string>) {
       state.currentCellId = action.payload;
-      state.cellBundles[action.payload] = {
-        isBundling: true,
-        code: '',
-        err: null,
-      };
+
+      if (!state.cellBundles[action.payload]) {
+        state.cellBundles[action.payload] = {
+          code: '',
+          err: null,
+          isBundling: false,
+        };
+      }
     },
     removeBundle(state, action: PayloadAction<string>) {
       delete state.cellBundles[action.payload];
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(createBundle.pending, (state, action) => {
-        const { cellBundles, currentCellId } = state;
+    startBundling(state, action: PayloadAction<string>) {
+      state.cellBundles[action.payload] = {
+        code: '',
+        err: null,
+        isBundling: false,
+      };
+    },
+    completeBundling(
+      state,
+      action: PayloadAction<{ cellId: string; bundle: Bundle }>
+    ) {
+      const { cellId, bundle } = action.payload;
 
-        if (!currentCellId) {
-          return;
-        }
-
-        const cell = cellBundles[currentCellId];
-
-        if (cell.isBundling === false) {
-          cell.isBundling = true;
-          cell.err = null;
-        }
-      })
-      .addCase(createBundle.fulfilled, (state, action) => {
-        const { cellBundles, currentCellId } = state;
-
-        if (!currentCellId) {
-          return;
-        }
-
-        const cell = cellBundles[currentCellId];
-
-        if (cell.isBundling === true) {
-          cell.isBundling = false;
-          cell.code = action.payload.code;
-          cell.err = action.payload.err;
-        }
-      })
-      .addCase(createBundle.rejected, (state, action) => {
-        const { cellBundles, currentCellId } = state;
-
-        if (!currentCellId) {
-          return;
-        }
-
-        const cell = cellBundles[currentCellId];
-
-        if (cell.isBundling === true) {
-          cell.isBundling = false;
-          cell.code = '';
-          cell.err = action.payload ? action.payload.err : 'error';
-        }
-      });
+      state.cellBundles[cellId] = {
+        code: bundle.code,
+        err: bundle.err,
+        isBundling: false,
+      };
+    },
   },
 });
 

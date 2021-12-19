@@ -1,11 +1,13 @@
 import React, { FC, useEffect } from 'react';
 import CodeEditor from '../codeEditor/CodeEditor';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 import Preview from '../Preview/Preview';
 import Resizable from '../Resizable/Resizable';
 import { Cell } from '../../store/cell';
 import { useActions, useTypedSelector, useAppDispatch } from '../../hooks';
-import { CodeCellContainer } from './CodeCell.styled';
+import { CodeCellContainer, BundlingProgress } from './CodeCell.styled';
 import { createBundle } from '../../store/features/bundles/bundles.thunk';
 
 interface Props {
@@ -49,10 +51,17 @@ const CodeCell: FC<Props> = ({ cell }) => {
             />
           </Resizable>
 
-          <Preview
-            code={bundle ? bundle.code : ''}
-            bundlingStatus={bundle ? bundle.err : null}
-          />
+          {!bundle || bundle?.isBundling ? (
+            <BundlingProgress>
+              <CircularProgress />
+
+              <Typography variant="h6" component="div">
+                {!bundle ? 'Loading' : 'Bundlig code'}...
+              </Typography>
+            </BundlingProgress>
+          ) : (
+            bundle && <Preview code={bundle.code} bundlingStatus={bundle.err} />
+          )}
         </CodeCellContainer>
       </Resizable>
     </Box>
