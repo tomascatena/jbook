@@ -2,38 +2,17 @@ import React, { FC, useRef } from 'react';
 import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/system';
 import codeShift from 'jscodeshift';
 import Highlighter from 'monaco-jsx-highlighter';
 import './syntax.css';
+import { FormatButton, CodeEditorContainer } from './CodeEditor.styled';
 
-const FormatButton = styled(Button)(({ theme }) => ({
-  position: 'absolute',
-  zIndex: 1,
-  right: '.5rem',
-  top: '.5rem',
-  opacity: 0,
-  transition: 'opacity 0.3s',
-  marginRight: theme.spacing(2),
-}));
-
-const CodeEditorContainer = styled('div')(({ theme }) => ({
-  position: 'relative',
-  width: 'calc(100% - 10px)',
-  height: '100%',
-
-  '&:hover > .MuiButton-root': {
-    opacity: 1,
-  },
-}));
-
-interface CodeEditorProps {
+interface Props {
   initialValue: string;
   onChange(value: string): void;
 }
 
-const CodeEditor: FC<CodeEditorProps> = ({ initialValue, onChange }) => {
+const CodeEditor: FC<Props> = ({ initialValue, onChange }) => {
   const editorRef = useRef<any>();
 
   const onEditorDidMount: EditorDidMount = (getCurrentValue, monacoEditor) => {

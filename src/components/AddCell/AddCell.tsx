@@ -1,54 +1,24 @@
 import React, { FC } from 'react';
 import { useActions } from '../../hooks';
-import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-
-const AddCellContainer = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isVisible',
-})<{ isVisible?: boolean }>(({ theme, isVisible }) => ({
-  position: 'relative',
-  marginBlock: theme.spacing(2),
-  display: 'flex',
-  gap: theme.spacing(20),
-  justifyContent: 'center',
-  opacity: isVisible ? 1 : 0,
-  transition: 'opacity 0.3s',
-
-  '&:hover': {
-    opacity: 1,
-  },
-
-  '& > .MuiButton-root': {
-    zIndex: 2,
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: '100rem',
-
-    '&:hover': {
-      backgroundColor: theme.palette.background.paper,
-    },
-  },
-}));
-
-const Divider = styled('div')(({ theme }) => ({
-  position: 'absolute',
-  top: '50%',
-  bottom: '50%',
-  borderBottom: '1px solid',
-  width: '80%',
-  zIndex: 1,
-}));
+import { AddCellContainer, Divider } from './AddCell.styled';
 
 interface Props {
   nextCellId: string | null;
-  isVisible?: boolean;
+  forceVisible?: boolean;
+  opacity?: number;
 }
 
-const AddCell: FC<Props> = ({ nextCellId, isVisible = false }) => {
+const AddCell: FC<Props> = ({
+  nextCellId,
+  forceVisible = false,
+  opacity = 1,
+}) => {
   const { insertCellBefore } = useActions();
 
   return (
-    <AddCellContainer isVisible={isVisible}>
+    <AddCellContainer forceVisible={forceVisible} opacity={opacity}>
       <Button
         startIcon={<AddIcon />}
         size="small"
@@ -67,7 +37,7 @@ const AddCell: FC<Props> = ({ nextCellId, isVisible = false }) => {
         MarkDown
       </Button>
 
-      <Divider></Divider>
+      <Divider />
     </AddCellContainer>
   );
 };

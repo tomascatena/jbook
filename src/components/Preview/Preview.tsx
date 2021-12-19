@@ -1,38 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { styled } from '@mui/system';
-
-const IframeContainer = styled('div')(({ theme }) => ({
-  position: 'relative',
-  height: '100%',
-  flex: 1,
-
-  '.react-draggable-transparent-selection &:after': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    backgroundColor: 'transparent',
-  },
-
-  iframe: {
-    height: '100%',
-    backgroundColor: '#fff',
-    width: '100%',
-  },
-}));
-
-const PreviewError = styled('div')(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  color: 'red',
-  backgroundColor: '#fff',
-  height: '100%',
-  width: '100%',
-  padding: theme.spacing(1),
-}));
+import { IframeContainer, PreviewError } from './Preview.styled';
 
 const html = `
 <html>
@@ -93,8 +60,8 @@ const Preview: FC<Props> = ({ code, bundlingStatus }) => {
   return (
     <IframeContainer>
       <iframe
-        title='preview'
-        sandbox='allow-scripts'
+        title="preview"
+        sandbox="allow-scripts"
         srcDoc={html}
         ref={iframe}
       />

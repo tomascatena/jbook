@@ -3,17 +3,10 @@ import { Cell } from '../../store/cell';
 import ActionBar from '../ActionBar/ActionBar';
 import CodeCell from '../CodeCell/CodeCell';
 import TextEditor from '../TextEditor/TextEditor';
-import { styled } from '@mui/system';
-
-const CellListItemContainer = styled('div')(({ theme }) => ({
-  position: 'relative',
-}));
-
-const ActionBarWrapper = styled('div')(({ theme }) => ({
-  width: '100%',
-  height: theme.spacing(3),
-  backgroundColor: '#37414b',
-}));
+import {
+  CellListItemContainer,
+  ActionBarWrapper,
+} from './CellListItems.styled';
 
 interface Props {
   cell: Cell;

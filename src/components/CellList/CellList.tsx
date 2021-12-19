@@ -24,7 +24,11 @@ const CellList: FC = (props: Props) => {
     <>
       {renderedCells}
 
-      <AddCell isVisible nextCellId={null} />
+      <AddCell
+        forceVisible
+        opacity={cellsList.length === 0 ? 1 : 0.5}
+        nextCellId={null}
+      />
     </>
   );
 };

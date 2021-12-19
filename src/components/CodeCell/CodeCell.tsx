@@ -3,16 +3,10 @@ import CodeEditor from '../codeEditor/CodeEditor';
 import Box from '@mui/material/Box';
 import Preview from '../Preview/Preview';
 import bundler from '../../bundler';
-import { styled } from '@mui/system';
 import Resizable from '../Resizable/Resizable';
 import { Cell } from '../../store/cell';
 import { useActions } from '../../hooks';
-
-const CodeCellContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  height: '100%',
-  flexDirection: 'row',
-}));
+import { CodeCellContainer } from './CodeCell.styled';
 
 interface Props {
   cell: Cell;
