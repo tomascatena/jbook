@@ -1,12 +1,12 @@
-import React, { useState, FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import CodeEditor from '../codeEditor/CodeEditor';
 import Box from '@mui/material/Box';
 import Preview from '../Preview/Preview';
-import bundler from '../../bundler';
 import Resizable from '../Resizable/Resizable';
 import { Cell } from '../../store/cell';
-import { useActions } from '../../hooks';
+import { useActions, useTypedSelector, useAppDispatch } from '../../hooks';
 import { CodeCellContainer } from './CodeCell.styled';
+import { createBundle } from '../../store/features/bundles/bundles.thunk';
 
 interface Props {
   cell: Cell;
@@ -14,16 +14,20 @@ interface Props {
 
 const CodeCell: FC<Props> = ({ cell }) => {
   const { updateCell } = useActions();
+  const dispatch = useAppDispatch();
 
-  const [code, setCode] = useState('');
-  const [err, setErr] = useState<string | null>(null);
+  const bundle = useTypedSelector(
+    (state) => state.bundles.cellBundles[cell.id]
+  );
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundler(cell.content);
-
-      setCode(output.code);
-      setErr(output.err);
+      dispatch(
+        createBundle({
+          cellId: cell.id,
+          rawCode: cell.content,
+        })
+      );
     }, 800);
 
     return () => {
@@ -31,6 +35,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
         clearTimeout(timer);
       }
     };
+    // eslint-disable-next-line
   }, [cell.content]);
 
   return (
@@ -44,7 +49,10 @@ const CodeCell: FC<Props> = ({ cell }) => {
             />
           </Resizable>
 
-          <Preview code={code} bundlingStatus={err} />
+          <Preview
+            code={bundle ? bundle.code : ''}
+            bundlingStatus={bundle ? bundle.err : null}
+          />
         </CodeCellContainer>
       </Resizable>
     </Box>

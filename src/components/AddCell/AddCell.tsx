@@ -21,8 +21,6 @@ const AddCell: FC<Props> = ({
 
   useEffect(() => {
     if (previousCellId === order[order.length - 1]) {
-      console.log(previousCellId, order);
-
       window.scrollTo({
         top: window.document.body.scrollHeight,
         behavior: 'smooth',

@@ -12,7 +12,12 @@ interface Props {
 }
 
 const ActionBar: FC<Props> = ({ cellId }) => {
-  const { deleteCell, moveCell } = useActions();
+  const { deleteCell, moveCell, removeBundle } = useActions();
+
+  const handleDeleteCell = () => {
+    deleteCell(cellId);
+    removeBundle(cellId);
+  };
 
   return (
     <ActionBarContainer>
@@ -27,10 +32,7 @@ const ActionBar: FC<Props> = ({ cellId }) => {
           onClick={() => moveCell({ id: cellId, direction: 'down' })}
         ></Button>
 
-        <Button
-          startIcon={<DeleteIcon />}
-          onClick={() => deleteCell(cellId)}
-        ></Button>
+        <Button startIcon={<DeleteIcon />} onClick={handleDeleteCell}></Button>
       </ButtonGroup>
     </ActionBarContainer>
   );
