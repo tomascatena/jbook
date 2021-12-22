@@ -23,6 +23,15 @@ const CodeCell: FC<Props> = ({ cell }) => {
   );
 
   useEffect(() => {
+    if (!bundle) {
+      dispatch(
+        createBundle({
+          cellId: cell.id,
+          rawCode: cell.content,
+        })
+      );
+    }
+
     const timer = setTimeout(async () => {
       dispatch(
         createBundle({
@@ -37,6 +46,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
         clearTimeout(timer);
       }
     };
+    // eslint-disable-next-line
   }, [cell.content, cell.id, dispatch]);
 
   return (
