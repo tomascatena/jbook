@@ -22,12 +22,33 @@ const CodeCell: FC<Props> = ({ cell }) => {
     (state) => state.bundles.cellBundles[cell.id]
   );
 
+  const cumulativeCode = useTypedSelector((state) => {
+    const { data, order } = state.cells;
+
+    const orderedCells = order.map((id) => data[id]);
+    const cumulativeCode = [];
+
+    for (let c of orderedCells) {
+      if (c.type === 'code') {
+        cumulativeCode.push(c.content);
+      }
+
+      if (c.id === cell.id) {
+        break;
+      }
+    }
+
+    return cumulativeCode;
+  });
+
   useEffect(() => {
+    const code = cumulativeCode.join('\n');
+
     if (!bundle) {
       dispatch(
         createBundle({
           cellId: cell.id,
-          rawCode: cell.content,
+          rawCode: code,
         })
       );
     }
@@ -36,7 +57,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
       dispatch(
         createBundle({
           cellId: cell.id,
-          rawCode: cell.content,
+          rawCode: code,
         })
       );
     }, 800);
@@ -69,7 +90,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
               </Typography>
             </BundlingProgress>
           ) : (
-            bundle && <Preview code={bundle.code} bundlingStatus={bundle.err} />
+            <Preview code={bundle.code} bundlingStatus={bundle.err} />
           )}
         </CodeCellContainer>
       </Resizable>
