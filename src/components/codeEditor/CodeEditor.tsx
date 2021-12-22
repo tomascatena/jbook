@@ -57,7 +57,7 @@ const CodeEditor: FC<Props> = ({ initialValue, onChange }) => {
 
   return (
     <CodeEditorContainer>
-      <FormatButton variant="outlined" onClick={onFormatClick}>
+      <FormatButton size="small" variant="outlined" onClick={onFormatClick}>
         Format
       </FormatButton>
 

@@ -8,11 +8,13 @@ export interface Bundle {
 export interface BundlesState {
   currentCellId: string | null;
   cellBundles: {
-    [key: string]: {
-      code: string;
-      err: string | null;
-      isBundling: boolean;
-    };
+    [key: string]:
+      | {
+          code: string;
+          err: string | null;
+          isBundling: boolean;
+        }
+      | undefined;
   };
 }
 

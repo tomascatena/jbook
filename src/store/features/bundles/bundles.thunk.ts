@@ -17,7 +17,7 @@ export const createBundle = createAsyncThunk<
 
     const { cellBundles } = getState().bundles;
 
-    if (cellBundles[cellId].isBundling) {
+    if (!cellBundles[cellId] || cellBundles[cellId]?.isBundling) {
       return;
     }
 

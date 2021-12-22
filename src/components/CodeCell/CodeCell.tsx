@@ -37,8 +37,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
         clearTimeout(timer);
       }
     };
-    // eslint-disable-next-line
-  }, [cell.content]);
+  }, [cell.content, cell.id, dispatch]);
 
   return (
     <Box sx={{ marginBottom: '21px' }}>
@@ -56,7 +55,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
               <CircularProgress />
 
               <Typography variant="h6" component="div">
-                {!bundle ? 'Loading' : 'Bundlig code'}...
+                {!bundle ? 'Loading' : 'Bundling code'}...
               </Typography>
             </BundlingProgress>
           ) : (
