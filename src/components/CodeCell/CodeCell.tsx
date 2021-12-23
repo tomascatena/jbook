@@ -26,29 +26,38 @@ const CodeCell: FC<Props> = ({ cell }) => {
     const { data, order } = state.cells;
 
     const orderedCells = order.map((id) => data[id]);
-    const cumulativeCode = [
-      `
-      import _React from 'react';
-      import _ReactDOM from 'react-dom';
 
-      const show = (value) => {
-        const rootElement =  document.querySelector('#root');
+    const showFunction = `
+    import _React from 'react';
+    import _ReactDOM from 'react-dom';
 
-        if(typeof value === 'object'){
-          if(value.$$typeof && value.props){
-            _ReactDOM.render(value, rootElement)
-          } else {
-            rootElement.innerHTML = JSON.stringify(value);
-          }
+    var show = (value) => {
+      const rootElement =  document.querySelector('#root');
+
+      if(typeof value === 'object'){
+        if(value.$$typeof && value.props){
+          _ReactDOM.render(value, rootElement)
         } else {
-          rootElement.innerHTML = value
+          rootElement.innerHTML = JSON.stringify(value);
         }
-      };
-      `,
-    ];
+      } else {
+        rootElement.innerHTML = value
+      }
+    };
+    `;
+
+    const showFunctionNoOperation = 'var show = () => {}';
+
+    const cumulativeCode = [];
 
     for (let c of orderedCells) {
       if (c.type === 'code') {
+        if (c.id === cell.id) {
+          cumulativeCode.push(showFunction);
+        } else {
+          cumulativeCode.push(showFunctionNoOperation);
+        }
+
         cumulativeCode.push(c.content);
       }
 
