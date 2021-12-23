@@ -6,7 +6,12 @@ import Typography from '@mui/material/Typography';
 import Preview from '../Preview/Preview';
 import Resizable from '../Resizable/Resizable';
 import { Cell } from '../../store/cell';
-import { useActions, useTypedSelector, useAppDispatch } from '../../hooks';
+import {
+  useActions,
+  useTypedSelector,
+  useAppDispatch,
+  useCumulativeCode,
+} from '../../hooks';
 import { CodeCellContainer, BundlingProgress } from './CodeCell.styled';
 import { createBundle } from '../../store/features/bundles/bundles.thunk';
 
@@ -22,61 +27,14 @@ const CodeCell: FC<Props> = ({ cell }) => {
     (state) => state.bundles.cellBundles[cell.id]
   );
 
-  const cumulativeCode = useTypedSelector((state) => {
-    const { data, order } = state.cells;
-
-    const orderedCells = order.map((id) => data[id]);
-
-    const showFunction = `
-    import _React from 'react';
-    import _ReactDOM from 'react-dom';
-
-    var show = (value) => {
-      const rootElement =  document.querySelector('#root');
-
-      if(typeof value === 'object'){
-        if(value.$$typeof && value.props){
-          _ReactDOM.render(value, rootElement)
-        } else {
-          rootElement.innerHTML = JSON.stringify(value);
-        }
-      } else {
-        rootElement.innerHTML = value
-      }
-    };
-    `;
-
-    const showFunctionNoOperation = 'var show = () => {}';
-
-    const cumulativeCode = [];
-
-    for (let c of orderedCells) {
-      if (c.type === 'code') {
-        if (c.id === cell.id) {
-          cumulativeCode.push(showFunction);
-        } else {
-          cumulativeCode.push(showFunctionNoOperation);
-        }
-
-        cumulativeCode.push(c.content);
-      }
-
-      if (c.id === cell.id) {
-        break;
-      }
-    }
-
-    return cumulativeCode;
-  });
+  const cumulativeCode = useCumulativeCode(cell.id);
 
   useEffect(() => {
-    const code = cumulativeCode.join('\n');
-
     if (!bundle) {
       dispatch(
         createBundle({
           cellId: cell.id,
-          rawCode: code,
+          rawCode: cumulativeCode,
         })
       );
     }
@@ -85,7 +43,7 @@ const CodeCell: FC<Props> = ({ cell }) => {
       dispatch(
         createBundle({
           cellId: cell.id,
-          rawCode: code,
+          rawCode: cumulativeCode,
         })
       );
     }, 800);
