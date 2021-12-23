@@ -2,6 +2,7 @@ import React, { FC, Fragment } from 'react';
 import { useTypedSelector } from '../../hooks';
 import CellListItem from '../CellListItem/CellListItem';
 import AddCell from '../AddCell/AddCell';
+import { CellListWrapper } from './CodeCell.styled';
 
 interface Props {}
 
@@ -23,7 +24,7 @@ const CellList: FC = (props: Props) => {
   renderedCells.push();
 
   return (
-    <>
+    <CellListWrapper>
       <AddCell
         forceVisible
         opacity={cellsList.length === 0 ? 1 : 0}
@@ -31,7 +32,7 @@ const CellList: FC = (props: Props) => {
       />
 
       {renderedCells}
-    </>
+    </CellListWrapper>
   );
 };
 
