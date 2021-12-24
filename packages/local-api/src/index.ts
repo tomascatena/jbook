@@ -1,5 +1,5 @@
 const serve = () => {
-  console.log('Server is listening!')
-}
+  console.log('Server is listening!');
+};
 
-export default serve
+export default serve;

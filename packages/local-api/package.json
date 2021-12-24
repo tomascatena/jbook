@@ -8,8 +8,8 @@
     "start": "tsc --watch --preserveWatchOutput"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "author": "Tomás Catena",
   "devDependencies": {
     "typescript": "4.5.4"
   }
