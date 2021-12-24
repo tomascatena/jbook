@@ -1,20 +1,10 @@
 {
-<<<<<<< HEAD
-  "name": "jbook",
-  "version": "0.1.0",
-  "license": "MIT",
-  "author": "Tomás Catena",
+  "name": "root",
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"
   },
   "scripts": {
     "start": "lerna run start --parallel"
-=======
-  "name": "root",
-  "private": true,
-  "devDependencies": {
-    "lerna": "^3.22.1"
->>>>>>> 5eb3ae3 (add lerna)
   }
 }
