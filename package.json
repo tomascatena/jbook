@@ -1,7 +1,13 @@
 {
-  "name": "root",
+  "name": "jbook",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Tomás Catena",
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "scripts": {
+    "start": "lerna run start --parallel"
   }
 }
