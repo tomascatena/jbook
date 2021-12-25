@@ -1,7 +1,7 @@
 import React, { FC, useRef } from 'react';
 import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
-import prettier from 'prettier';
-import parser from 'prettier/parser-babel';
+// import prettier from 'prettier';
+// import parser from 'prettier/parser-babel';
 import codeShift from 'jscodeshift';
 import Highlighter from 'monaco-jsx-highlighter';
 import './syntax.css';
@@ -42,17 +42,17 @@ const CodeEditor: FC<Props> = ({ initialValue, onChange }) => {
   const onFormatClick = () => {
     const unformatted = editorRef.current.getModel().getValue();
 
-    const formatted = prettier
-      .format(unformatted, {
-        parser: 'babel',
-        plugins: [parser],
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-      })
-      .replace(/\n$/, '');
+    // const formatted = prettier
+    //   .format(unformatted, {
+    //     parser: 'babel',
+    //     plugins: [parser],
+    //     useTabs: false,
+    //     semi: true,
+    //     singleQuote: true,
+    //   })
+    //   .replace(/\n$/, '');
 
-    editorRef.current.setValue(formatted);
+    editorRef.current.setValue(unformatted);
   };
 
   return (
