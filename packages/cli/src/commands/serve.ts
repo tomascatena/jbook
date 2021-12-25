@@ -1,7 +1,6 @@
 import path from 'path';
 import { Command } from 'commander';
 import { serve } from 'local-api';
-import http from 'http';
 
 export const serveCommand = new Command()
   .command('serve [filename]')
@@ -16,13 +15,13 @@ export const serveCommand = new Command()
       console.log(
         `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
       );
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.code === 'EADDRINUSE') {
-          console.log('Port is in use. Try running on a different port.');
-        } else {
-          console.log('Heres the problem', error.message);
-        }
+    } catch (err) {
+      let error: any = err;
+
+      if (error.code === 'EADDRINUSE') {
+        console.log('Port is in use. Try running on a different port.');
+      } else {
+        console.log('Heres the problem', error.message);
       }
 
       process.exit(1);
