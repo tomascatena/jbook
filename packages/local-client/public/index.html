@@ -39,5 +39,20 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <script type="module">
+      import prettier from 'https://unpkg.com/prettier@2.5.1/esm/standalone.mjs';
+      import parserBabel from 'https://unpkg.com/prettier@2.5.1/esm/parser-babel.mjs';
+
+      window.__PRETTIER_FORMATTER__ = (unformatted) => {
+        return prettier.format(unformatted, {
+          parser: 'babel',
+          plugins: [parserBabel],
+          useTabs: false,
+          semi: true,
+          singleQuote: true,
+        });
+      };
+    </script>
   </body>
 </html>

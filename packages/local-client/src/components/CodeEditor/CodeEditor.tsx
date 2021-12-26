@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 // import prettier from 'prettier';
 // import parser from 'prettier/parser-babel';
@@ -7,6 +7,14 @@ import Highlighter from 'monaco-jsx-highlighter';
 import './syntax.css';
 import { FormatButton, CodeEditorContainer } from './CodeEditor.styled';
 
+type PrettierFormatter = (unformatted: string) => string;
+
+declare global {
+  interface Window {
+    __PRETTIER_FORMATTER__: PrettierFormatter;
+  }
+}
+
 interface Props {
   initialValue: string;
   onChange(value: string): void;
@@ -14,6 +22,7 @@ interface Props {
 
 const CodeEditor: FC<Props> = ({ initialValue, onChange }) => {
   const editorRef = useRef<any>();
+  const prettierFormatter = useRef<PrettierFormatter>();
 
   const onEditorDidMount: EditorDidMount = (getCurrentValue, monacoEditor) => {
     editorRef.current = monacoEditor;
@@ -39,20 +48,22 @@ const CodeEditor: FC<Props> = ({ initialValue, onChange }) => {
     );
   };
 
+  useEffect(() => {
+    prettierFormatter.current = window.__PRETTIER_FORMATTER__;
+  }, []);
+
   const onFormatClick = () => {
     const unformatted = editorRef.current.getModel().getValue();
 
-    // const formatted = prettier
-    //   .format(unformatted, {
-    //     parser: 'babel',
-    //     plugins: [parser],
-    //     useTabs: false,
-    //     semi: true,
-    //     singleQuote: true,
-    //   })
-    //   .replace(/\n$/, '');
+    let formatted: string;
 
-    editorRef.current.setValue(unformatted);
+    if (prettierFormatter.current) {
+      formatted = prettierFormatter.current(unformatted).replace(/\n$/, '');
+    } else {
+      formatted = unformatted;
+    }
+
+    editorRef.current.setValue(formatted);
   };
 
   return (
