@@ -4,7 +4,10 @@ import CellListItem from '../CellListItem/CellListItem';
 import AddCell from '../AddCell/AddCell';
 import { CellListWrapper } from './CodeCell.styled';
 import { useAppDispatch } from '../../hooks';
-import { fetchCells } from '../../store/features/cells/cellsSlice.thunk';
+import {
+  fetchCells,
+  saveCells,
+} from '../../store/features/cells/cellsSlice.thunk';
 
 interface Props {}
 
