@@ -4,6 +4,8 @@ import { ThunkDispatch } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export const persistMiddleware: Middleware = (store: MiddlewareAPI) => {
+  let timer: ReturnType<typeof setTimeout>;
+
   return (next: Dispatch) => {
     return (action) => {
       next(action);
@@ -16,9 +18,15 @@ export const persistMiddleware: Middleware = (store: MiddlewareAPI) => {
           'cell/insertCell',
         ].includes(action.type)
       ) {
-        (store.dispatch as ThunkDispatch<RootState, unknown, AnyAction>)(
-          saveCells()
-        );
+        if (timer) {
+          clearTimeout(timer);
+        }
+
+        timer = setTimeout(() => {
+          (store.dispatch as ThunkDispatch<RootState, unknown, AnyAction>)(
+            saveCells()
+          );
+        }, 1000);
       }
     };
   };
