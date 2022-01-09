@@ -4,10 +4,7 @@ import CellListItem from '../CellListItem/CellListItem';
 import AddCell from '../AddCell/AddCell';
 import { CellListWrapper } from './CodeCell.styled';
 import { useAppDispatch } from '../../hooks';
-import {
-  fetchCells,
-  saveCells,
-} from '../../store/features/cells/cellsSlice.thunk';
+import { fetchCells } from '../../store/features/cells/cellsSlice.thunk';
 
 interface Props {}
 
@@ -16,6 +13,7 @@ const CellList: FC = (props: Props) => {
 
   useEffect(() => {
     dispatch(fetchCells());
+    // eslint-disable-next-line
   }, []);
 
   const { data, order } = useTypedSelector((state) => state.cells);
