@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "license": "MIT",
-  "author": "Tomás Catena",
+  "author": "tcatena",
   "dependencies": {
     "@apuntes/local-client": "^1.0.1"
   },
@@ -26,5 +26,5 @@
     "esbuild": "0.8.26",
     "typescript": "4.4.4"
   },
-  "gitHead": "c32f1cf7880969c9617edab7928cf64d6f7c8886"
+  "gitHead": "f648ceee886473e6231e3936075814e01704fc97"
 }

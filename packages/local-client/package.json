@@ -2,7 +2,7 @@
   "name": "@apuntes/local-client",
   "version": "1.0.1",
   "license": "MIT",
-  "author": "Tomás Catena",
+  "author": "tcatena",
   "publishConfig": {
     "access": "public"
   },
@@ -69,5 +69,5 @@
       "last 1 safari version"
     ]
   },
-  "gitHead": "c32f1cf7880969c9617edab7928cf64d6f7c8886"
+  "gitHead": "f648ceee886473e6231e3936075814e01704fc97"
 }
