@@ -2,6 +2,7 @@
   "name": "apuntes",
   "version": "1.0.0",
   "description": "",
+  "bin": "dist/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -9,7 +10,8 @@
     "dist"
   ],
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "tsc"
   },
   "keywords": [],
   "license": "MIT",
