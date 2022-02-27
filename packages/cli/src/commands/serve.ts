@@ -1,6 +1,6 @@
 import path from 'path';
 import { Command } from 'commander';
-import { serve } from '@apuntes/local-api';
+import { serve } from '@notas-js/local-api';
 
 const isProduction = process.env.NODE_ENV === 'production';
 

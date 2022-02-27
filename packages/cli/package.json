@@ -1,5 +1,5 @@
 {
-  "name": "apuntes",
+  "name": "notas-js",
   "version": "1.0.0",
   "description": "",
   "bin": "dist/index.js",
@@ -17,10 +17,10 @@
   "license": "MIT",
   "author": "Tomás Catena",
   "dependencies": {
-    "@apuntes/local-client": "^1.0.0"
+    "@notas-js/local-client": "^1.0.0"
   },
   "devDependencies": {
-    "@apuntes/local-api": "^1.0.0",
+    "@notas-js/local-api": "^1.0.0",
     "@types/node": "17.0.4",
     "commander": "8.3.0",
     "esbuild": "0.8.26",
