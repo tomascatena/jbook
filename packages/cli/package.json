@@ -1,6 +1,6 @@
 {
   "name": "apuntes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "bin": "dist/index.js",
   "publishConfig": {
@@ -17,10 +17,10 @@
   "license": "MIT",
   "author": "tcatena",
   "dependencies": {
-    "@apuntes/local-client": "^1.0.1"
+    "@apuntes/local-client": "^1.0.2"
   },
   "devDependencies": {
-    "@apuntes/local-api": "^1.0.1",
+    "@apuntes/local-api": "^1.0.2",
     "@types/node": "17.0.4",
     "commander": "8.3.0",
     "esbuild": "0.8.26",
