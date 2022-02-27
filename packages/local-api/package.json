@@ -1,5 +1,5 @@
 {
-  "name": "@apuntes/local-api",
+  "name": "@notas-js/local-api",
   "version": "1.0.2",
   "description": "",
   "publishConfig": {
@@ -23,10 +23,10 @@
     "typescript": "4.4.4"
   },
   "dependencies": {
-    "@apuntes/local-client": "^1.0.2",
+    "@notas-js/local-client": "^1.0.2",
     "cors": "2.8.5",
     "express": "4.17.2",
     "http-proxy-middleware": "2.0.1"
   },
-  "gitHead": "f648ceee886473e6231e3936075814e01704fc97"
+  "gitHead": "274d2254363ed12840a8cc7f7a121fd30eed17d8"
 }
