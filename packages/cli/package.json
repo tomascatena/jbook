@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "license": "MIT",
-  "author": "Tomás Catena",
+  "author": "tcatena",
   "dependencies": {
     "@notas-js/local-client": "^1.0.0"
   },

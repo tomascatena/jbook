@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "license": "MIT",
-  "author": "Tomás Catena",
+  "author": "tcatena",
   "name": "root",
   "private": true,
   "devDependencies": {
