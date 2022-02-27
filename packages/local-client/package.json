@@ -3,8 +3,23 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "Tomás Catena",
-  "private": true,
-  "dependencies": {
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build"
+  ],
+  "devDependencies": {
+    "@types/jest": "24.9.1",
+    "@types/jscodeshift": "0.7.2",
+    "@types/node": "12.20.37",
+    "@types/prettier": "2.4.2",
+    "@types/react": "16.14.21",
+    "@types/react-dom": "16.9.14",
+    "@types/react-redux": "7.1.20",
+    "@types/react-resizable": "1.7.4",
+    "@types/redux": "3.6.0",
+    "@types/uuid": "8.3.3",
     "@emotion/react": "11.7.0",
     "@emotion/styled": "11.6.0",
     "@monaco-editor/react": "3.7.5",
@@ -29,19 +44,7 @@
     "react-resizable": "3.0.4",
     "react-scripts": "4.0.3",
     "redux": "4.1.2",
-    "uuid": "8.3.2"
-  },
-  "devDependencies": {
-    "@types/jest": "24.9.1",
-    "@types/jscodeshift": "0.7.2",
-    "@types/node": "12.20.37",
-    "@types/prettier": "2.4.2",
-    "@types/react": "16.14.21",
-    "@types/react-dom": "16.9.14",
-    "@types/react-redux": "7.1.20",
-    "@types/react-resizable": "1.7.4",
-    "@types/redux": "3.6.0",
-    "@types/uuid": "8.3.3",
+    "uuid": "8.3.2",
     "typescript": "4.4.4"
   },
   "scripts": {
